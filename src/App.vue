@@ -1,7 +1,7 @@
 <script setup>
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import Greet from "./components/Greet.vue";
+import Greet from './components/Greet.vue';
 </script>
 
 <template>
@@ -10,13 +10,13 @@ import Greet from "./components/Greet.vue";
 
     <div class="row">
       <a href="https://vitejs.dev" target="_blank">
-        <img src="/vite.svg" class="logo vite" alt="Vite logo" />
+        <img src="/vite.svg" class="logo vite" alt="Vite logo"/>
       </a>
       <a href="https://tauri.app" target="_blank">
-        <img src="/tauri.svg" class="logo tauri" alt="Tauri logo" />
+        <img src="/tauri.svg" class="logo tauri" alt="Tauri logo"/>
       </a>
       <a href="https://vuejs.org/" target="_blank">
-        <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
+        <img src="./assets/vue.svg" class="logo vue" alt="Vue logo"/>
       </a>
     </div>
 
@@ -28,16 +28,12 @@ import Greet from "./components/Greet.vue";
       +
       <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
       +
-      <a href="https://github.com/tauri-apps/tauri-vscode" target="_blank"
-        >Tauri</a
-      >
+      <a href="https://github.com/tauri-apps/tauri-vscode" target="_blank">Tauri</a>
       +
-      <a href="https://github.com/rust-lang/rust-analyzer" target="_blank"
-        >rust-analyzer</a
-      >
+      <a href="https://github.com/rust-lang/rust-analyzer" target="_blank">rust-analyzer</a>
     </p>
 
-    <Greet />
+    <Greet/>
   </div>
 </template>
 
