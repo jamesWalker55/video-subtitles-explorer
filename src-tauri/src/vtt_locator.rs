@@ -1,9 +1,24 @@
 use std::path::{Path, PathBuf};
+use tauri::InvokeError;
 
 #[derive(Debug, PartialEq)]
-enum VttPathError {
+pub enum VttPathError {
     InvalidPath,
     VttNotFound,
+}
+
+// quick implementation to allow calling #to_string() for this error type
+impl std::fmt::Display for VttPathError {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
+}
+
+// teach the compiler how to convert VttPathError into a tauri-compatible error
+impl Into<InvokeError> for VttPathError {
+    fn into(self) -> InvokeError {
+        InvokeError::from(self.to_string())
+    }
 }
 
 /// Given a path, find its related .vtt file.
@@ -18,6 +33,20 @@ fn locate(video_path: &Path) -> Result<PathBuf, VttPathError> {
     if vtt_path.exists() { return Ok(vtt_path); }
 
     Err(VttPathError::VttNotFound)
+}
+
+#[tauri::command]
+pub fn locate_vtt(video_path: String) -> Result<String, VttPathError> {
+    let video_path = Path::new(video_path.as_str());
+    match locate(&video_path) {
+        Ok(path) => {
+            match path.to_str() {
+                Some(x) => Ok(x.to_string()),
+                None => Err(VttPathError::InvalidPath),
+            }
+        },
+        Err(x) => Err(x),
+    }
 }
 
 #[cfg(test)]
