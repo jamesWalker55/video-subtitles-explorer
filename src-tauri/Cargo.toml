@@ -20,6 +20,7 @@ tauri = { version = "1.1", features = ["api-all"] }
 tauri-plugin-window-state = { git = "https://github.com/tauri-apps/tauri-plugin-window-state", rev = "25b9c686c178ac51acfc79573d6a7d93c6842e23" }
 
 [dev-dependencies]
+indoc = "1.0.7"
 tempfile = "3.3.0"
 
 [features]
