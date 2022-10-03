@@ -64,12 +64,15 @@ fn parse_duration(text: &str) -> Result<Duration, Error> {
     Ok(Duration::new(secs, nanosecs))
 }
 
-fn from_str(vtt: &str) -> Result<Vec<Cue>, Error> {
+fn from_lines<'a, T>(lines: T) -> Result<Vec<Cue>, Error>
+    where
+        T: Iterator<Item=&'a str>
+{
     let mut cues = vec![];
     let mut current_cue_lines = vec![];
     let mut state = ParserState::InHeader;
 
-    for line in vtt.lines() {
+    for line in lines {
         match state {
             ParserState::InHeader => {
                 if line != "WEBVTT" { return Err(Error::InvalidHeader); }
@@ -129,6 +132,10 @@ fn from_str(vtt: &str) -> Result<Vec<Cue>, Error> {
     }
 
     Ok(cues)
+}
+
+fn from_str(text: &str) -> Result<Vec<Cue>, Error> {
+    from_lines(text.lines())
 }
 
 #[cfg(test)]
