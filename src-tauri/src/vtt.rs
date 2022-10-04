@@ -1,7 +1,8 @@
+use std::path::Path;
 use std::time::Duration;
 
 #[derive(PartialEq, PartialOrd, Debug)]
-struct Cue {
+pub struct Cue {
     start: Duration,
     end: Duration,
     text: String,
@@ -15,7 +16,8 @@ enum ParserState {
 }
 
 #[derive(Debug)]
-enum Error {
+pub enum Error {
+    CannotOpenFile,
     InvalidHeader,
     InvalidCueTime,
 }
@@ -136,6 +138,17 @@ fn from_lines<'a, T>(lines: T) -> Result<Vec<Cue>, Error>
 
 fn from_str(text: &str) -> Result<Vec<Cue>, Error> {
     from_lines(text.lines())
+}
+
+fn from_path(path: &Path) -> Result<Vec<Cue>, Error> {
+    let text = std::fs::read_to_string(path).map_err(|_| Error::CannotOpenFile)?;
+    from_str(&text)
+}
+
+#[tauri::command]
+pub fn read_vtt(path: String) -> Result<Vec<Cue>, Error> {
+    let path = Path::new(&path);
+    from_path(path)
 }
 
 #[cfg(test)]
