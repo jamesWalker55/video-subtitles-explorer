@@ -35,6 +35,8 @@ async function buttonClick() {
     <div class="row">
       <Player ref="player" :src="playerSrc" type="video/mp4"/>
     </div>
+
+    <CueDisplay :cues="cues" :current-index="7"/>
   </div>
 </template>
 
