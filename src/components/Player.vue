@@ -8,7 +8,7 @@ const props = defineProps({
   type: String,
 });
 
-const emit = defineEmits(["timeupdate"])
+const emit = defineEmits(['timeupdate']);
 
 const videoEl = ref(null);
 
@@ -20,9 +20,9 @@ watch(() => props.src, (newVal, oldVal) => {
   if (videoEl.value === null) return;
 
   // call #load on the video element
-  console.log("Calling #load on:", videoEl.value);
+  console.log('Calling #load on:', videoEl.value);
   videoEl.value.load();
-  console.log("Success", videoEl.value);
+  console.log('Success', videoEl.value);
 });
 
 function seekTo(time) {
