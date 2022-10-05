@@ -64,6 +64,10 @@ const currentCueIndex = computed(() => {
       <Player ref="player" :src="playerSrc" type="video/mp4" @timeupdate="(secs, isPaused) => playbackTime = secs"/>
     </div>
 
+    <div id="grabber"
+         class="w-1 bg-gray-800 hover:bg-gray-400 cursor-ew-resize">
+    </div>
+
     <div class="basis-1/2 h-full">
       <CueDisplay :cues="cues" :current-index="currentCueIndex"/>
     </div>
