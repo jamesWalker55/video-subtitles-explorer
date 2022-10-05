@@ -3,7 +3,6 @@
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import {convertFileSrc} from '@tauri-apps/api/tauri';
 import {open} from '@tauri-apps/api/dialog';
-import Greet from './components/Greet.vue';
 import Player from './components/Player.vue';
 import {ref} from 'vue';
 import {invoke} from '@tauri-apps/api';
