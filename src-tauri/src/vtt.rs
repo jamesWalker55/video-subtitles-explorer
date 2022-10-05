@@ -2,8 +2,9 @@ use std::path::Path;
 use std::time::Duration;
 use tauri::InvokeError;
 use strum_macros::Display;
+use serde::{Serialize, Deserialize};
 
-#[derive(PartialEq, PartialOrd, Debug)]
+#[derive(PartialEq, PartialOrd, Debug, Serialize, Deserialize)]
 pub struct Cue {
     start: Duration,
     end: Duration,
