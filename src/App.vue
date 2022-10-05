@@ -4,11 +4,13 @@
 import {convertFileSrc} from '@tauri-apps/api/tauri';
 import {open} from '@tauri-apps/api/dialog';
 import Player from './components/Player.vue';
+import CueDisplay from './components/CueDisplay.vue';
 import {ref} from 'vue';
 import {invoke} from '@tauri-apps/api';
 
 const player = ref(null);
-const playerSrc = ref("");
+const playerSrc = ref('');
+const cues = ref([]);
 
 async function buttonClick() {
   console.log('Clicked!');
@@ -19,9 +21,9 @@ async function buttonClick() {
   });
   playerSrc.value = convertFileSrc(path);
   const vttPath = await invoke('locate_vtt', {videoPath: path});
-  console.log("vttPath", vttPath);
-  const cues = await invoke('read_vtt', {path: vttPath});
-  console.log("cues", cues);
+  console.log('vttPath', vttPath);
+  cues.value = await invoke('read_vtt', {path: vttPath});
+  console.log('cues', cues.value);
   // player.value.load();
   // player.value.seekTo(100);
   // player.value.play();
@@ -29,23 +31,25 @@ async function buttonClick() {
 </script>
 
 <template>
-  <div class="container">
-    <button type="button" @click="buttonClick">Greet</button>
+  <div id="overlay"></div>
+  <div
+      id="root-container"
+      class="flex items-stretch flex-col sm:flex-row">
 
-    <div class="row">
+    <div class="basis-1/2">
       <Player ref="player" :src="playerSrc" type="video/mp4"/>
     </div>
 
-    <CueDisplay :cues="cues" :current-index="7"/>
+    <div class="basis-1/2">
+      <CueDisplay :cues="cues" :current-index="7"/>
+    </div>
   </div>
 </template>
 
 <style scoped>
-.logo.vite:hover {
-  filter: drop-shadow(0 0 2em #747bff);
-}
-
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #249b73);
+#root-container {
+  height: 100%;
+  width: 100%;
+//background: red;
 }
 </style>

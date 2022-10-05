@@ -40,13 +40,11 @@ defineExpose({seekTo, play, pause});
 </script>
 
 <template>
-  <video controls ref="videoEl">
-    <source :src="props.src" :type="props.type">
-  </video>
+  <div class="w-full h-full">
+    <video controls
+           class="bg-gray-800 h-full"
+           ref="videoEl">
+      <source :src="props.src" :type="props.type">
+    </video>
+  </div>
 </template>
-
-<style scoped>
-video {
-  width: 100%;
-}
-</style>
