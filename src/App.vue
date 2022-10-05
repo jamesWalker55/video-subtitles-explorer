@@ -7,26 +7,28 @@ import Player from './components/Player.vue';
 import CueDisplay from './components/CueDisplay.vue';
 import {computed, ref} from 'vue';
 import {invoke} from '@tauri-apps/api';
+import Toolbar from './components/Toolbar.vue';
+import OpenIcon from '/src/assets/folder-open.svg';
+import TargetIcon from '/src/assets/target.svg';
+import ToolbarButton from './components/ToolbarButton.vue';
+const log = console.log;
 
 const player = ref(null);
 const playerSrc = ref('');
 const cues = ref([]);
 
 async function buttonClick() {
-  console.log('Clicked!');
-  const path = await open({
+  const videoPath = await open({
     filters: [
       {name: 'Video', extensions: ['mp4', 'mkv']},
     ],
   });
-  playerSrc.value = convertFileSrc(path);
-  const vttPath = await invoke('locate_vtt', {videoPath: path});
-  console.log('vttPath', vttPath);
+  if (videoPath === null) return;
+
+  playerSrc.value = convertFileSrc(videoPath);
+
+  const vttPath = await invoke('locate_vtt', {videoPath: videoPath});
   cues.value = await invoke('read_vtt', {path: vttPath});
-  console.log('cues', cues.value);
-  // player.value.load();
-  // player.value.seekTo(100);
-  // player.value.play();
 }
 
 function getCurrentCueIndex(cues, currentTime) {
@@ -55,20 +57,33 @@ const currentCueIndex = computed(() => {
       class="flex items-stretch flex-col sm:flex-row relative">
 
     <button type="button"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded absolute top-5 left-5 z-10"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded absolute top-14 left-5 z-10"
             @click="buttonClick">
       Select file...
     </button>
 
-    <div class="basis-1/2">
+    <div class="basis-1/2 flex flex-col">
+      <Toolbar>
+        <ToolbarButton @click="buttonClick" title="Open video file...">
+          <OpenIcon/>
+        </ToolbarButton>
+      </Toolbar>
       <Player ref="player" :src="playerSrc" type="video/mp4" @timeupdate="(secs, isPaused) => playbackTime = secs"/>
     </div>
 
     <div id="grabber"
-         class="w-1 bg-gray-800 hover:bg-gray-400 cursor-ew-resize">
+         class="w-1 bg-gray-900 hover:bg-gray-400 cursor-ew-resize">
     </div>
 
-    <div class="basis-1/2 h-full">
+    <div class="basis-1/2 flex flex-col">
+      <Toolbar>
+        <ToolbarButton @click="log" title="Open subtitles file...">
+          <OpenIcon/>
+        </ToolbarButton>
+        <ToolbarButton @click="log" title="Scroll to current cue">
+          <TargetIcon/>
+        </ToolbarButton>
+      </Toolbar>
       <CueDisplay :cues="cues" :current-index="currentCueIndex"/>
     </div>
   </div>
