@@ -1,39 +1,41 @@
 <script setup>
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
+import {convertFileSrc} from '@tauri-apps/api/tauri';
+import {open} from '@tauri-apps/api/dialog';
 import Greet from './components/Greet.vue';
+import Player from './components/Player.vue';
+import {ref} from 'vue';
+import {invoke} from '@tauri-apps/api';
+
+const player = ref(null);
+const playerSrc = ref("");
+
+async function buttonClick() {
+  console.log('Clicked!');
+  const path = await open({
+    filters: [
+      {name: 'Video', extensions: ['mp4', 'mkv']},
+    ],
+  });
+  playerSrc.value = convertFileSrc(path);
+  const vttPath = await invoke('locate_vtt', {videoPath: path});
+  console.log("vttPath", vttPath);
+  const cues = await invoke('read_vtt', {path: vttPath});
+  console.log("cues", cues);
+  // player.value.load();
+  // player.value.seekTo(100);
+  // player.value.play();
+}
 </script>
 
 <template>
   <div class="container">
-    <h1>Welcome to Tauri!</h1>
+    <button type="button" @click="buttonClick">Greet</button>
 
     <div class="row">
-      <a href="https://vitejs.dev" target="_blank">
-        <img src="/vite.svg" class="logo vite" alt="Vite logo"/>
-      </a>
-      <a href="https://tauri.app" target="_blank">
-        <img src="/tauri.svg" class="logo tauri" alt="Tauri logo"/>
-      </a>
-      <a href="https://vuejs.org/" target="_blank">
-        <img src="./assets/vue.svg" class="logo vue" alt="Vue logo"/>
-      </a>
+      <Player ref="player" :src="playerSrc" type="video/mp4"/>
     </div>
-
-    <p>Click on the Tauri, Vite, and Vue logos to learn more.</p>
-
-    <p>
-      Recommended IDE setup:
-      <a href="https://code.visualstudio.com/" target="_blank">VS Code</a>
-      +
-      <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
-      +
-      <a href="https://github.com/tauri-apps/tauri-vscode" target="_blank">Tauri</a>
-      +
-      <a href="https://github.com/rust-lang/rust-analyzer" target="_blank">rust-analyzer</a>
-    </p>
-
-    <Greet/>
   </div>
 </template>
 

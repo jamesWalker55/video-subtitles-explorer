@@ -13,11 +13,14 @@ const videoEl = ref(null);
 // watch the props.src variable
 // if it changed, we manually reload the video
 watch(() => props.src, (newVal, oldVal) => {
+  console.log('src has been changed to', newVal);
   // do nothing if the video element doesn't exist yet (may happen on first startup)
   if (videoEl.value === null) return;
 
   // call #load on the video element
+  console.log("Calling #load on:", videoEl.value);
   videoEl.value.load();
+  console.log("Success", videoEl.value);
 });
 
 function seekTo(time) {
