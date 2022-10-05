@@ -8,6 +8,8 @@ const props = defineProps({
   type: String,
 });
 
+const emit = defineEmits(["timeupdate"])
+
 const videoEl = ref(null);
 
 // watch the props.src variable
@@ -43,7 +45,8 @@ defineExpose({seekTo, play, pause});
   <div class="w-full h-full">
     <video controls
            class="bg-gray-800 h-full"
-           ref="videoEl">
+           ref="videoEl"
+           @timeupdate="(e) => emit('timeupdate', e.target.currentTime, e.target.paused)">
       <source :src="props.src" :type="props.type">
     </video>
   </div>
