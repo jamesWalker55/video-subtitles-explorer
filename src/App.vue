@@ -54,6 +54,12 @@ const currentCueIndex = computed(() => {
       id="root-container"
       class="flex items-stretch flex-col sm:flex-row relative">
 
+    <button type="button"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded absolute top-5 left-5 z-10"
+            @click="buttonClick">
+      Select file...
+    </button>
+
     <div class="basis-1/2">
       <Player ref="player" :src="playerSrc" type="video/mp4" @timeupdate="(secs, isPaused) => playbackTime = secs"/>
     </div>
