@@ -1,17 +1,11 @@
 use std::path::{Path, PathBuf};
 use tauri::InvokeError;
+use strum_macros::Display;
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Display)]
 pub enum VttPathError {
     InvalidPath,
     VttNotFound,
-}
-
-// quick implementation to allow calling #to_string() for this error type
-impl std::fmt::Display for VttPathError {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "{:?}", self)
-    }
 }
 
 // teach the compiler how to convert VttPathError into a tauri-compatible error
