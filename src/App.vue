@@ -5,7 +5,7 @@ import {convertFileSrc} from '@tauri-apps/api/tauri';
 import {open} from '@tauri-apps/api/dialog';
 import Player from './components/Player.vue';
 import CueDisplay from './components/CueDisplay.vue';
-import {ref} from 'vue';
+import {computed, ref} from 'vue';
 import {invoke} from '@tauri-apps/api';
 
 const player = ref(null);
@@ -28,20 +28,38 @@ async function buttonClick() {
   // player.value.seekTo(100);
   // player.value.play();
 }
+
+function getCurrentCueIndex(cues, currentTime) {
+  for (let i = 0; i < cues.length; i++) {
+    const cue = cues[i];
+    const start = cue.start.secs + cue.start.nanos * 1e-9;
+    const end = cue.end.secs + cue.end.nanos * 1e-9;
+    if (start <= currentTime && currentTime < end) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+const playbackTime = ref(-1);
+
+const currentCueIndex = computed(() => {
+  return getCurrentCueIndex(cues.value, playbackTime.value);
+});
 </script>
 
 <template>
   <div id="overlay"></div>
   <div
       id="root-container"
-      class="flex items-stretch flex-col sm:flex-row">
+      class="flex items-stretch flex-col sm:flex-row relative">
 
     <div class="basis-1/2">
-      <Player ref="player" :src="playerSrc" type="video/mp4"/>
+      <Player ref="player" :src="playerSrc" type="video/mp4" @timeupdate="(secs, isPaused) => playbackTime = secs"/>
     </div>
 
-    <div class="basis-1/2">
-      <CueDisplay :cues="cues" :current-index="7"/>
+    <div class="basis-1/2 h-full">
+      <CueDisplay :cues="cues" :current-index="currentCueIndex"/>
     </div>
   </div>
 </template>
