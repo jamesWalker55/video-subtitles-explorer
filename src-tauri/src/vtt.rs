@@ -1,5 +1,7 @@
 use std::path::Path;
 use std::time::Duration;
+use tauri::InvokeError;
+use strum_macros::Display;
 
 #[derive(PartialEq, PartialOrd, Debug)]
 pub struct Cue {
@@ -15,11 +17,18 @@ enum ParserState {
     InCue,
 }
 
-#[derive(Debug)]
+#[derive(Display, PartialEq, Debug)]
 pub enum Error {
     CannotOpenFile,
     InvalidHeader,
     InvalidCueTime,
+}
+
+// teach the compiler how to convert VttPathError into a tauri-compatible error
+impl Into<InvokeError> for Error {
+    fn into(self) -> InvokeError {
+        InvokeError::from(self.to_string())
+    }
 }
 
 fn parse_duration(text: &str) -> Result<Duration, Error> {
