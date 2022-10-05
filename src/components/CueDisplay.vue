@@ -10,7 +10,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <ul id="cue-display" class="overflow-auto">
+  <ul id="cue-display" class="overflow-auto h-full">
     <template v-for="(cue, index) in props.cues">
       <CueItem :cue="cue" :is-current="index === props.currentIndex"/>
     </template>
