@@ -61,12 +61,6 @@ function seekPlayer(time) {
       id="root-container"
       class="flex items-stretch flex-col sm:flex-row relative">
 
-    <button type="button"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded absolute top-14 left-5 z-10"
-            @click="buttonClick">
-      Select file...
-    </button>
-
     <div class="basis-1/2 flex flex-col">
       <Toolbar>
         <ToolbarButton @click="buttonClick" title="Open video file...">
