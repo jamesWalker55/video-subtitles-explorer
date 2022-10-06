@@ -48,6 +48,11 @@ const playbackTime = ref(-1);
 const currentCueIndex = computed(() => {
   return getCurrentCueIndex(cues.value, playbackTime.value);
 });
+
+function seekPlayer(time) {
+  console.log("Seeking to", time);
+  player.value.seekTo(time);
+}
 </script>
 
 <template>
@@ -84,7 +89,7 @@ const currentCueIndex = computed(() => {
           <TargetIcon/>
         </ToolbarButton>
       </Toolbar>
-      <CueDisplay :cues="cues" :current-index="currentCueIndex"/>
+      <CueDisplay :cues="cues" :current-index="currentCueIndex" @seek="(time) => seekPlayer(time.secs + time.nanos * 1e-9)"/>
     </div>
   </div>
 </template>
