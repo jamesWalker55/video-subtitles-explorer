@@ -61,10 +61,12 @@
       {
         "visible": false,
         "fullscreen": false,
-        "height": 600,
-        "resizable": true,
         "title": "video-subtitles-explorer",
-        "width": 800
+        "minWidth": 460,
+        "minHeight": 300,
+        "width": 800,
+        "height": 600,
+        "resizable": true
       }
     ]
   }
