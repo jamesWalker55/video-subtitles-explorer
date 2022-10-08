@@ -75,22 +75,28 @@ function seekPlayer(time) {
   <div id="overlay"></div>
   <div
       id="root-container"
-      class="flex items-stretch flex-col sm:flex-row relative">
+      class="flex flex-row">
 
-    <div class="basis-1/2 flex flex-col">
+    <div class="flex-grow-0 flex-shrink-0 flex flex-col h-full" style="width: 400px">
       <Toolbar>
         <ToolbarButton @click="selectVideo" title="Open video file...">
           <OpenIcon/>
         </ToolbarButton>
       </Toolbar>
-      <Player ref="player" :src="playerSrc" type="video/mp4" @timeupdate="(secs, isPaused) => playbackTime = secs"/>
+      <Player
+          class="flex-shrink flex-grow"
+          ref="player"
+          :src="playerSrc"
+          type="video/mp4"
+          @timeupdate="(secs, isPaused) => playbackTime = secs"
+      />
     </div>
 
     <div id="grabber"
          class="w-1 bg-gray-900 hover:bg-gray-400 cursor-ew-resize">
     </div>
 
-    <div class="basis-1/2 flex flex-col">
+    <div class="flex-grow flex-shrink flex flex-col">
       <Toolbar>
         <ToolbarButton @click="selectVtt" title="Open subtitles file...">
           <OpenIcon/>

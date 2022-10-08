@@ -42,12 +42,10 @@ defineExpose({seekTo, play, pause});
 </script>
 
 <template>
-  <div class="w-full h-full">
-    <video controls
-           class="bg-gray-800 h-full"
-           ref="videoEl"
-           @timeupdate="(e) => emit('timeupdate', e.target.currentTime, e.target.paused)">
-      <source :src="props.src" :type="props.type">
-    </video>
-  </div>
+  <video controls
+         class="bg-gray-800 min-h-0 min-w-0"
+         ref="videoEl"
+         @timeupdate="(e) => emit('timeupdate', e.target.currentTime, e.target.paused)">
+    <source :src="props.src" :type="props.type">
+  </video>
 </template>
