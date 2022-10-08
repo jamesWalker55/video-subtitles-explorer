@@ -15,20 +15,36 @@ const log = console.log;
 
 const player = ref(null);
 const playerSrc = ref('');
+const cueDisplay = ref(null);
 const cues = ref([]);
 
-async function buttonClick() {
+async function selectVideo() {
   const videoPath = await open({
-    filters: [
-      {name: 'Video', extensions: ['mp4', 'mkv']},
-    ],
+    filters: [{name: 'Video', extensions: ['mp4', 'mkv']}],
   });
   if (videoPath === null) return;
 
   playerSrc.value = convertFileSrc(videoPath);
 
-  const vttPath = await invoke('locate_vtt', {videoPath: videoPath});
-  cues.value = await invoke('read_vtt', {path: vttPath});
+  try {
+    const vttPath = await invoke('locate_vtt', {videoPath: videoPath});
+    cues.value = await invoke('read_vtt', {path: vttPath});
+  } catch (e) {
+    // do nothing
+  }
+}
+
+async function selectVtt() {
+  const vttPath = await open({
+    filters: [{name: 'Subtitles', extensions: ['vtt']}],
+  });
+  if (vttPath === null) return;
+
+  try {
+    cues.value = await invoke('read_vtt', {path: vttPath});
+  } catch (e) {
+    // do nothing
+  }
 }
 
 function getCurrentCueIndex(cues, currentTime) {
@@ -63,7 +79,7 @@ function seekPlayer(time) {
 
     <div class="basis-1/2 flex flex-col">
       <Toolbar>
-        <ToolbarButton @click="buttonClick" title="Open video file...">
+        <ToolbarButton @click="selectVideo" title="Open video file...">
           <OpenIcon/>
         </ToolbarButton>
       </Toolbar>
@@ -76,14 +92,19 @@ function seekPlayer(time) {
 
     <div class="basis-1/2 flex flex-col">
       <Toolbar>
-        <ToolbarButton @click="log" title="Open subtitles file...">
+        <ToolbarButton @click="selectVtt" title="Open subtitles file...">
           <OpenIcon/>
         </ToolbarButton>
-        <ToolbarButton @click="log" title="Scroll to current cue">
+        <ToolbarButton @click="() => {cueDisplay.scrollToIndex(currentCueIndex)}" title="Scroll to current cue">
           <TargetIcon/>
         </ToolbarButton>
       </Toolbar>
-      <CueDisplay :cues="cues" :current-index="currentCueIndex" @seek="(time) => seekPlayer(time.secs + time.nanos * 1e-9)"/>
+      <CueDisplay
+          ref="cueDisplay"
+          :cues="cues"
+          :current-index="currentCueIndex"
+          @seek="(time) => seekPlayer(time.secs + time.nanos * 1e-9)"
+      />
     </div>
   </div>
 </template>
