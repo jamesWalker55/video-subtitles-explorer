@@ -1,6 +1,6 @@
 <script setup>
 import CueItem from './CueItem.vue';
-import {defineExpose, ref} from 'vue';
+import {ref} from 'vue';
 
 const props = defineProps({
   // the list of cues to be rendered
