@@ -1,5 +1,5 @@
 <script setup>
-import CueItem from './CueItem.vue';
+import CueListItem from './CueListItem.vue';
 import {ref} from 'vue';
 
 const props = defineProps({
@@ -34,7 +34,7 @@ defineExpose({scrollToIndex});
 <template>
   <ul id="cue-display" class="overflow-auto h-full" ref="displayEl">
     <template v-for="(cue, index) in props.cues">
-      <CueItem
+      <CueListItem
           :cue="cue"
           :is-current="index === props.currentIndex"
           :data-index="index"
