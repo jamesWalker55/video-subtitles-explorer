@@ -135,19 +135,22 @@ const currentCueIndex = computed(() => {
         </ToolbarButton>
       </Toolbar>
       <CueDoc
-          v-if="useCueDoc"
+          v-if="useCueDoc && cues.length > 0"
           ref="cueDisplay"
           :cues="cues"
           :current-index="currentCueIndex"
           @seek="(time) => player.seekTo(time.secs + time.nanos * 1e-9)"
       />
       <CueList
-          v-else
+          v-else-if="cues.length > 0"
           ref="cueDisplay"
           :cues="cues"
           :current-index="currentCueIndex"
           @seek="(time) => player.seekTo(time.secs + time.nanos * 1e-9)"
       />
+      <div v-else class="flex justify-center p-5 text-xl">
+        No subtitles loaded.
+      </div>
     </div>
   </div>
 </template>
