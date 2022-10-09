@@ -28,7 +28,7 @@ function formatDuration(duration) {
       :class="props.isCurrent ? 'bg-amber-300 hover:bg-amber-400 active:bg-amber-500' : 'hover:bg-gray-100 active:bg-gray-300'"
       @click="emit('seek', cue.start)">
     <div class="select-none font-mono text-sm flex-none text-gray-300 group-hover:text-gray-500 group-active:underline"
-         :class="props.isCurrent ? 'text-gray-500' : ''">
+         :class="props.isCurrent ? 'text-gray-400' : ''">
       {{ formatDuration(cue.start) }}
     </div>
     <div>
