@@ -62,7 +62,7 @@
         "visible": false,
         "fullscreen": false,
         "title": "video-subtitles-explorer",
-        "minWidth": 460,
+        "minWidth": 500,
         "minHeight": 300,
         "width": 800,
         "height": 600,
