@@ -15,10 +15,20 @@ import TargetIcon from '/src/assets/target.svg';
 
 const log = console.log;
 
+// the Player element
 const player = ref(null);
+// the source URL currently loaded in the player
 const playerSrc = ref('');
+// the current playback position of the video player
+const playbackTime = ref(-1);
+
+// the CueDisplay element
 const cueDisplay = ref(null);
+// the list of cues currently loaded in the cue display
 const cues = ref([]);
+
+// current width of the sidebar
+const sidebarWidth = ref(400);
 
 async function selectVideo() {
   const videoPath = await open({
@@ -60,9 +70,6 @@ function getCurrentCueIndex(cues, currentTime) {
   }
   return -1;
 }
-
-const playbackTime = ref(-1);
-const sidebarWidth = ref(400);
 
 const currentCueIndex = computed(() => {
   return getCurrentCueIndex(cues.value, playbackTime.value);
