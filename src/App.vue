@@ -59,7 +59,8 @@ async function selectVideo() {
     const vttPath = await invoke('locate_vtt', {videoPath: videoPath});
     cues.value = await invoke('read_vtt', {path: vttPath});
   } catch (e) {
-    // do nothing
+    // failed to locate vtt, clear the cue list
+    cues.value = [];
   }
 }
 
