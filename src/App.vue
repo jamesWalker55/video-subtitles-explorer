@@ -8,6 +8,7 @@ import CueDisplay from './components/CueDisplay.vue';
 import {computed, ref} from 'vue';
 import {invoke} from '@tauri-apps/api';
 import Toolbar from './components/Toolbar.vue';
+import Sidebar from './components/Sidebar.vue';
 import OpenIcon from '/src/assets/folder-open.svg';
 import TargetIcon from '/src/assets/target.svg';
 import ToolbarButton from './components/ToolbarButton.vue';
@@ -77,7 +78,7 @@ function seekPlayer(time) {
       id="root-container"
       class="flex flex-row">
 
-    <div class="flex-grow-0 flex-shrink-0 flex flex-col h-full" style="width: 400px">
+    <Sidebar class="flex-grow-0 flex-shrink-0 flex flex-col h-full" width="400">
       <Toolbar>
         <ToolbarButton @click="selectVideo" title="Open video file...">
           <OpenIcon/>
@@ -90,11 +91,7 @@ function seekPlayer(time) {
           type="video/mp4"
           @timeupdate="(secs, isPaused) => playbackTime = secs"
       />
-    </div>
-
-    <div id="grabber"
-         class="w-1 bg-gray-900 hover:bg-gray-400 cursor-ew-resize">
-    </div>
+    </Sidebar>
 
     <div class="flex-grow flex-shrink flex flex-col">
       <Toolbar>
