@@ -5,13 +5,15 @@ import {open} from '@tauri-apps/api/dialog';
 import {computed, onMounted, onUnmounted, ref} from 'vue';
 
 import Player from './components/Player.vue';
-import CueList from './components/CueDoc.vue';
+import CueDoc from './components/CueDoc.vue';
+import CueList from './components/CueList.vue';
 import Toolbar from './components/Toolbar.vue';
 import Sidebar from './components/Sidebar.vue';
 import ToolbarButton from './components/ToolbarButton.vue';
 
 import OpenIcon from '/src/assets/folder-open.svg';
 import TargetIcon from '/src/assets/target.svg';
+import TextIcon from '/src/assets/align-left.svg';
 
 const log = console.log;
 
@@ -22,7 +24,9 @@ const playerSrc = ref('');
 // the current playback position of the video player
 const playbackTime = ref(-1);
 
-// the CueList element
+// whether to use CueList or CueDoc as the display
+const useCueDoc = ref(false);
+// the cue display element, either CueList or CueDoc
 const cueDisplay = ref(null);
 // the list of cues currently loaded in the cue list
 const cues = ref([]);
@@ -126,8 +130,19 @@ const currentCueIndex = computed(() => {
         <ToolbarButton @click="() => {cueDisplay.scrollToIndex(currentCueIndex)}" title="Scroll to current cue">
           <TargetIcon/>
         </ToolbarButton>
+        <ToolbarButton @click="() => {useCueDoc = !useCueDoc}" title="Toggle paragraph view">
+          <TextIcon/>
+        </ToolbarButton>
       </Toolbar>
+      <CueDoc
+          v-if="useCueDoc"
+          ref="cueDisplay"
+          :cues="cues"
+          :current-index="currentCueIndex"
+          @seek="(time) => player.seekTo(time.secs + time.nanos * 1e-9)"
+      />
       <CueList
+          v-else
           ref="cueDisplay"
           :cues="cues"
           :current-index="currentCueIndex"
