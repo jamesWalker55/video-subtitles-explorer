@@ -66,11 +66,6 @@ const sidebarWidth = ref(400);
 const currentCueIndex = computed(() => {
   return getCurrentCueIndex(cues.value, playbackTime.value);
 });
-
-function seekPlayer(time) {
-  console.log("Seeking to", time);
-  player.value.seekTo(time);
-}
 </script>
 
 <template>
@@ -107,7 +102,7 @@ function seekPlayer(time) {
           ref="cueDisplay"
           :cues="cues"
           :current-index="currentCueIndex"
-          @seek="(time) => seekPlayer(time.secs + time.nanos * 1e-9)"
+          @seek="(time) => player.seekTo(time.secs + time.nanos * 1e-9)"
       />
     </div>
   </div>
