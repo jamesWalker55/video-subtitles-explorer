@@ -1,6 +1,4 @@
 <script setup>
-import {ref} from 'vue';
-
 const props = defineProps({
   // the list of cues to be rendered
   cue: Object,

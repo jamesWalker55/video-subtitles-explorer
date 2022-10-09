@@ -41,14 +41,14 @@ function formatDuration(duration) {
 
 <template>
   <span class="group inline"
-      :class="props.isCurrent ? 'bg-amber-300 hover:bg-amber-400 active:bg-amber-500' : 'hover:bg-gray-100 active:bg-gray-300'"
-      @click="emit('seek', cue.start)">
+        :class="props.isCurrent ? 'bg-amber-300 hover:bg-amber-400 active:bg-amber-500' : 'hover:bg-gray-100 active:bg-gray-300'"
+        @click="emit('seek', cue.start)">
     <template v-for="(text, index) in textParts">
       <!-- manually add a space to the end of this text... -->
       <!-- ...so that when you select and copy text there is a space between cues -->
-      {{text + ' '}}
+      {{ text + ' ' }}
       <!-- a paragraph break, put this at the end of '.' and '?' -->
-      <br class="block content-[''] mt-3" v-if="index !== textParts.length - 1 || endsWithTerminator" />
+      <br class="block content-[''] mt-3" v-if="index !== textParts.length - 1 || endsWithTerminator"/>
     </template>
   </span>
 </template>

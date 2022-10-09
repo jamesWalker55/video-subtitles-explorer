@@ -95,17 +95,17 @@ const currentCueIndex = computed(() => {
 
 <template>
   <div id="overlay"></div>
-  <div
-      id="root-container"
-      class="flex flex-row">
+  <div id="root-container"
+       class="flex flex-row">
 
-    <Sidebar class="flex-grow-0 flex-shrink-0 flex flex-col h-full" v-model:width="sidebarWidth" :min-width="200" :max-width="windowWidth - 300">
+    <Sidebar class="flex-grow-0 flex-shrink-0 flex flex-col h-full"
+             v-model:width="sidebarWidth" :min-width="200" :max-width="windowWidth - 300">
       <Toolbar>
         <span class="text-gray-500 tracking-wider">
           Video
           <span class="ml-2 mr-0">|</span>
         </span>
-        <ToolbarButton @click="selectVideo" title="Open video file...">
+        <ToolbarButton title="Open video file..." @click="selectVideo">
           <OpenIcon/>
         </ToolbarButton>
       </Toolbar>
@@ -124,13 +124,13 @@ const currentCueIndex = computed(() => {
           Subtitles
           <span class="ml-2 mr-0">|</span>
         </span>
-        <ToolbarButton @click="selectVtt" title="Open subtitles file...">
+        <ToolbarButton title="Open subtitles file..." @click="selectVtt">
           <OpenIcon/>
         </ToolbarButton>
-        <ToolbarButton @click="() => {cueDisplay.scrollToIndex(currentCueIndex)}" title="Scroll to current cue">
+        <ToolbarButton title="Scroll to current cue" @click="() => {cueDisplay.scrollToIndex(currentCueIndex)}">
           <TargetIcon/>
         </ToolbarButton>
-        <ToolbarButton @click="() => {useCueDoc = !useCueDoc}" title="Toggle paragraph view">
+        <ToolbarButton title="Toggle paragraph view" @click="() => {useCueDoc = !useCueDoc}">
           <TextIcon/>
         </ToolbarButton>
       </Toolbar>

@@ -25,7 +25,7 @@ function scrollToIndex(index) {
 
   const targetYpos = cueLocalOffsetTop - (viewportHeight - cueHeight) / 2;
 
-  displayEl.value.scrollTo({top: targetYpos})
+  displayEl.value.scrollTo({top: targetYpos});
 }
 
 defineExpose({scrollToIndex});

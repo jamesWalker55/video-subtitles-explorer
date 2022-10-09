@@ -18,7 +18,7 @@ const constrainedWidth = computed(() => {
   return width;
 });
 
-const emit = defineEmits(["update:width", "beginResize", "endResize"]);
+const emit = defineEmits(['update:width', 'beginResize', 'endResize']);
 
 const sidebar = ref(null);
 const grabber = ref(null);
@@ -32,7 +32,7 @@ const grabberCallbacks = (function() {
      * @param e {MouseEvent}
      */
     mousedown(e) {
-      console.log(performance.now(), "mousedown");
+      console.log(performance.now(), 'mousedown');
       isResizing = true;
       emit('beginResize');
     },
@@ -45,7 +45,7 @@ const grabberCallbacks = (function() {
 
       // const newPos = e.pageX - grabber.value.getBoundingClientRect().width / 2;
       const newPos = e.pageX;
-      console.log(performance.now(), "mousemove", newPos);
+      console.log(performance.now(), 'mousemove', newPos);
       emit('update:width', newPos);
     },
     /**
@@ -53,11 +53,11 @@ const grabberCallbacks = (function() {
      * @param e {MouseEvent}
      */
     mouseup(e) {
-      console.log(performance.now(), "mouseup");
+      console.log(performance.now(), 'mouseup');
       isResizing = false;
       emit('endResize');
     },
-  }
+  };
 })();
 
 onMounted(() => {
