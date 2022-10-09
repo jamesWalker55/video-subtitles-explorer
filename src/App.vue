@@ -5,7 +5,7 @@ import {open} from '@tauri-apps/api/dialog';
 import {computed, onMounted, onUnmounted, ref} from 'vue';
 
 import Player from './components/Player.vue';
-import CueList from './components/CueList.vue';
+import CueList from './components/CueDoc.vue';
 import Toolbar from './components/Toolbar.vue';
 import Sidebar from './components/Sidebar.vue';
 import ToolbarButton from './components/ToolbarButton.vue';
