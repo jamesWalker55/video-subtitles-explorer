@@ -1,6 +1,4 @@
 <script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import {convertFileSrc} from '@tauri-apps/api/tauri';
 import {open} from '@tauri-apps/api/dialog';
 import Player from './components/Player.vue';
