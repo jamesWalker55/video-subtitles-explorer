@@ -61,6 +61,7 @@ function getCurrentCueIndex(cues, currentTime) {
 }
 
 const playbackTime = ref(-1);
+const sidebarWidth = ref(400);
 
 const currentCueIndex = computed(() => {
   return getCurrentCueIndex(cues.value, playbackTime.value);
@@ -78,7 +79,7 @@ function seekPlayer(time) {
       id="root-container"
       class="flex flex-row">
 
-    <Sidebar class="flex-grow-0 flex-shrink-0 flex flex-col h-full" width="400">
+    <Sidebar class="flex-grow-0 flex-shrink-0 flex flex-col h-full" v-model:width="sidebarWidth">
       <Toolbar>
         <ToolbarButton @click="selectVideo" title="Open video file...">
           <OpenIcon/>
