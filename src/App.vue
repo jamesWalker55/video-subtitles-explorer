@@ -2,7 +2,7 @@
 import {invoke} from '@tauri-apps/api';
 import {convertFileSrc} from '@tauri-apps/api/tauri';
 import {open} from '@tauri-apps/api/dialog';
-import {computed, ref} from 'vue';
+import {computed, onMounted, onUnmounted, ref} from 'vue';
 
 import Player from './components/Player.vue';
 import CueDisplay from './components/CueDisplay.vue';
@@ -29,6 +29,19 @@ const cues = ref([]);
 
 // current width of the sidebar
 const sidebarWidth = ref(400);
+
+const windowWidth = (function() {
+  const widthRef = ref(window.innerWidth);
+
+  function updateWidth() {
+    widthRef.value = window.innerWidth;
+  }
+
+  onMounted(() => window.addEventListener('resize', updateWidth));
+  onUnmounted(() => window.removeEventListener('resize', updateWidth));
+
+  return widthRef;
+})();
 
 async function selectVideo() {
   const videoPath = await open({
@@ -82,7 +95,7 @@ const currentCueIndex = computed(() => {
       id="root-container"
       class="flex flex-row">
 
-    <Sidebar class="flex-grow-0 flex-shrink-0 flex flex-col h-full" v-model:width="sidebarWidth">
+    <Sidebar class="flex-grow-0 flex-shrink-0 flex flex-col h-full" v-model:width="sidebarWidth" :min-width="200" :max-width="windowWidth - 300">
       <Toolbar>
         <ToolbarButton @click="selectVideo" title="Open video file...">
           <OpenIcon/>
