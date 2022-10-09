@@ -97,6 +97,10 @@ const currentCueIndex = computed(() => {
 
     <Sidebar class="flex-grow-0 flex-shrink-0 flex flex-col h-full" v-model:width="sidebarWidth" :min-width="200" :max-width="windowWidth - 300">
       <Toolbar>
+        <span class="text-gray-500 tracking-wider">
+          Video
+          <span class="ml-2 mr-0">|</span>
+        </span>
         <ToolbarButton @click="selectVideo" title="Open video file...">
           <OpenIcon/>
         </ToolbarButton>
@@ -112,6 +116,10 @@ const currentCueIndex = computed(() => {
 
     <div class="flex-grow flex-shrink flex flex-col">
       <Toolbar>
+        <span class="text-gray-500 tracking-wider">
+          Subtitles
+          <span class="ml-2 mr-0">|</span>
+        </span>
         <ToolbarButton @click="selectVtt" title="Open subtitles file...">
           <OpenIcon/>
         </ToolbarButton>
