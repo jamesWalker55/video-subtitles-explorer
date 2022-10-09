@@ -12,8 +12,8 @@ pub struct Cue {
 }
 
 enum ParserState {
+    FirstLine,
     InHeader,
-    BlankLineAfterHeader,
     BetweenCues,
     InCue,
 }
@@ -82,19 +82,22 @@ fn from_lines<'a, T>(lines: T) -> Result<Vec<Cue>, Error>
 {
     let mut cues = vec![];
     let mut current_cue_lines = vec![];
-    let mut state = ParserState::InHeader;
+    let mut state = ParserState::FirstLine;
 
     for line in lines {
         match state {
-            ParserState::InHeader => {
+            ParserState::FirstLine => {
                 if line != "WEBVTT" { return Err(Error::InvalidHeader); }
 
-                state = ParserState::BlankLineAfterHeader;
+                state = ParserState::InHeader;
             }
-            ParserState::BlankLineAfterHeader => {
-                if line.len() != 0 { return Err(Error::InvalidHeader); }
-
-                state = ParserState::BetweenCues;
+            ParserState::InHeader => {
+                if line.len() != 0 {
+                    // do nothing, metadata is useless
+                } else {
+                    // if blank line, then it is the line before a cue
+                    state = ParserState::BetweenCues;
+                }
             }
             ParserState::BetweenCues => {
                 if line.len() == 0 { continue; }
@@ -241,6 +244,37 @@ mod tests {
         fn multiline() {
             let text = indoc! {"
                 WEBVTT
+
+                00:19.920 --> 00:28.150
+                Hello.
+                Hello, hi everyone.
+
+                00:28.150 --> 05:27.800
+                We'll just wait a couple of minutes.
+                And a couple more minutes...
+            "};
+            let result = from_str(text).unwrap();
+            let expected = vec![
+                Cue {
+                    start: Duration::new(19, 920 * 1000000),
+                    end: Duration::new(28, 150 * 1000000),
+                    text: String::from("Hello.\nHello, hi everyone."),
+                },
+                Cue {
+                    start: Duration::new(28, 150 * 1000000),
+                    end: Duration::new(5 * 60 + 27, 800 * 1000000),
+                    text: String::from("We'll just wait a couple of minutes.\nAnd a couple more minutes..."),
+                },
+            ];
+            assert_eq!(result, expected);
+        }
+
+        #[test]
+        fn metadata() {
+            let text = indoc! {"
+                WEBVTT
+                Kind: captions
+                Language: en
 
                 00:19.920 --> 00:28.150
                 Hello.
