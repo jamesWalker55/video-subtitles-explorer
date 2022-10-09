@@ -14,20 +14,18 @@ const emit = defineEmits(['seek']);
 const displayEl = ref(null);
 
 function scrollToIndex(index) {
-  // const cueEl = displayEl.value.querySelector(`[data-index="${index}"]`);
-  // if (cueEl === null) return;
-  //
-  // const viewportHeight = displayEl.value.clientHeight;
-  // // .offsetTop returns the position relative to the main window for some reason
-  // // i'm subtracting it by the parent's .offsetTop to get the position relative to the scroll area
-  // const cueLocalOffsetTop = cueEl.offsetTop - displayEl.value.offsetTop;
-  // const cueHeight = cueEl.getBoundingClientRect().height;
-  //
-  // const targetYpos = cueLocalOffsetTop - (viewportHeight - cueHeight) / 2;
-  //
-  // displayEl.value.scrollTo({top: targetYpos})
-  console.log("#scrollToIndex", index);
-  throw "Not yet implemented";
+  const cueEl = displayEl.value.querySelector(`[data-index="${index}"]`);
+  if (cueEl === null) return;
+
+  const viewportHeight = displayEl.value.clientHeight;
+  // .offsetTop returns the position relative to the main window for some reason
+  // i'm subtracting it by the parent's .offsetTop to get the position relative to the scroll area
+  const cueLocalOffsetTop = cueEl.offsetTop - displayEl.value.offsetTop;
+  const cueHeight = cueEl.getBoundingClientRect().height;
+
+  const targetYpos = cueLocalOffsetTop - (viewportHeight - cueHeight) / 2;
+
+  displayEl.value.scrollTo({top: targetYpos})
 }
 
 defineExpose({scrollToIndex});
