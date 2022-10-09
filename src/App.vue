@@ -5,7 +5,7 @@ import {open} from '@tauri-apps/api/dialog';
 import {computed, onMounted, onUnmounted, ref} from 'vue';
 
 import Player from './components/Player.vue';
-import CueDisplay from './components/CueDisplay.vue';
+import CueList from './components/CueList.vue';
 import Toolbar from './components/Toolbar.vue';
 import Sidebar from './components/Sidebar.vue';
 import ToolbarButton from './components/ToolbarButton.vue';
@@ -22,9 +22,9 @@ const playerSrc = ref('');
 // the current playback position of the video player
 const playbackTime = ref(-1);
 
-// the CueDisplay element
+// the CueList element
 const cueDisplay = ref(null);
-// the list of cues currently loaded in the cue display
+// the list of cues currently loaded in the cue list
 const cues = ref([]);
 
 // current width of the sidebar
@@ -119,7 +119,7 @@ const currentCueIndex = computed(() => {
           <TargetIcon/>
         </ToolbarButton>
       </Toolbar>
-      <CueDisplay
+      <CueList
           ref="cueDisplay"
           :cues="cues"
           :current-index="currentCueIndex"

@@ -80,5 +80,5 @@ onUnmounted(() => {
        class="w-1 flex-grow-0 flex-shrink-0 bg-gray-900 hover:bg-gray-400 cursor-ew-resize"
        @mousedown.prevent="grabberCallbacks.mousedown"
   />
-  <!-- use @mousedown.prevent to avoid creating/affecting text selections on the cue display list -->
+  <!-- use @mousedown.prevent to avoid creating/affecting text selections on the cue list -->
 </template>
