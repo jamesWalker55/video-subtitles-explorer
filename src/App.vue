@@ -1,15 +1,18 @@
 <script setup>
+import {invoke} from '@tauri-apps/api';
 import {convertFileSrc} from '@tauri-apps/api/tauri';
 import {open} from '@tauri-apps/api/dialog';
+import {computed, ref} from 'vue';
+
 import Player from './components/Player.vue';
 import CueDisplay from './components/CueDisplay.vue';
-import {computed, ref} from 'vue';
-import {invoke} from '@tauri-apps/api';
 import Toolbar from './components/Toolbar.vue';
 import Sidebar from './components/Sidebar.vue';
+import ToolbarButton from './components/ToolbarButton.vue';
+
 import OpenIcon from '/src/assets/folder-open.svg';
 import TargetIcon from '/src/assets/target.svg';
-import ToolbarButton from './components/ToolbarButton.vue';
+
 const log = console.log;
 
 const player = ref(null);
