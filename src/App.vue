@@ -2,6 +2,7 @@
 import {invoke} from '@tauri-apps/api';
 import {convertFileSrc} from '@tauri-apps/api/tauri';
 import {open} from '@tauri-apps/api/dialog';
+import {appWindow} from '@tauri-apps/api/window'
 import {computed, onMounted, onUnmounted, ref} from 'vue';
 
 import Player from './components/Player.vue';
@@ -54,6 +55,7 @@ async function selectVideo() {
   if (videoPath === null) return;
 
   playerSrc.value = convertFileSrc(videoPath);
+  appWindow.setTitle(`video-subtitles-explorer - ${videoPath}`).catch((e) => console.error(e));
 
   try {
     const vttPath = await invoke('locate_vtt', {videoPath: videoPath});
