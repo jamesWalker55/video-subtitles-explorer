@@ -162,6 +162,6 @@ const currentCueIndex = computed(() => {
 #root-container {
   height: 100%;
   width: 100%;
-//background: red;
+  /*background: red;*/
 }
 </style>
